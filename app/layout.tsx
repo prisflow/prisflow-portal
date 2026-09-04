@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PRISFLOW // PLATFORM",
+  title: "PRISFLOW",
   description: "Prisflow 平台门户：产品矩阵入口",
   referrer: "no-referrer",
 };
