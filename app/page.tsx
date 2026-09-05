@@ -40,9 +40,9 @@ export default function Home() {
 
       <div className="relative z-10 mx-auto flex min-h-dvh max-w-5xl flex-col px-6">
         {/* 顶栏 */}
-        <header className="flex items-center justify-between border-b border-white/[0.07] py-5 text-[12px] tracking-[0.18em] text-white/45">
+        <header className="flex items-center justify-between border-b border-white/[0.07] py-5 text-[12px] tracking-[0.18em] text-white/60">
           <span>
-            PRISFLOW <span className="text-white/25">//</span> PLATFORM
+            PRISFLOW <span className="text-white/45">//</span> PLATFORM
           </span>
           <span className="flex items-center gap-2.5">
             <span className="pulse-dot" />
@@ -55,7 +55,7 @@ export default function Home() {
           <h1 className="text-[clamp(2.8rem,9vw,6.5rem)] font-bold leading-none tracking-[0.28em] text-white select-none">
             PRISFLOW
           </h1>
-          <p className="mt-6 text-sm text-white/40">
+          <p className="mt-6 text-sm text-white/60">
             棱流 平台 · 产品矩阵入口
             <span className="mx-3 text-white/20">/</span>
             <span className="text-[var(--color-accent)]">SELECT A PRODUCT TO CONTINUE</span>
@@ -69,15 +69,15 @@ export default function Home() {
                   <span className="text-[11px] tracking-[0.22em] text-[var(--color-accent)]">
                     {p.tag}
                   </span>
-                  <span className="card-arrow text-lg text-white/30">→</span>
+                  <span className="card-arrow text-lg text-white/50">→</span>
                 </div>
                 <h2 className="mt-5 text-xl font-bold tracking-[0.12em] text-white">
                   {p.name}
                 </h2>
-                <p className="mt-2 text-sm leading-relaxed text-white/50">
+                <p className="mt-2 text-sm leading-relaxed text-white/65">
                   {p.description}
                 </p>
-                <div className="mt-7 flex items-center justify-between border-t border-white/[0.07] pt-3 text-[11px] text-white/30">
+                <div className="mt-7 flex items-center justify-between border-t border-white/[0.07] pt-3 text-[11px] text-white/50">
                   <span>{p.version}</span>
                   <span>{p.host}</span>
                 </div>
@@ -87,7 +87,7 @@ export default function Home() {
         </main>
 
         {/* 页脚 */}
-        <footer className="flex items-center justify-between border-t border-white/[0.07] py-5 text-[11px] tracking-[0.12em] text-white/30">
+        <footer className="flex items-center justify-between border-t border-white/[0.07] py-5 text-[11px] tracking-[0.12em] text-white/50">
           <a
             href="https://beian.miit.gov.cn/"
             target="_blank"
