@@ -67,7 +67,7 @@ export default function Home() {
   const heroBoxRef = useRef<HTMLDivElement>(null);
   const heroInnerRef = useRef<HTMLDivElement>(null);
   const headerLogoRef = useRef<HTMLDivElement>(null);
-  const productsRef = useRef<HTMLElement>(null);
+  const productsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -130,8 +130,9 @@ export default function Home() {
     const darkIo = new IntersectionObserver(
       // 根据 entry.isIntersecting 的结果确定是否加上 dark-stage
       ([entry]) => html.classList.toggle("dark-stage", entry.isIntersecting),
-      // 顺时针 上下压缩百分之四十二，只看视口中线
-      { rootMargin: "-42% 0px -42% 0px" },
+      // 上压 55%、下压 15%：检测带为视口 55%~85% 的区域。变黑线（85%——产品区一探头）
+      // 与变白线（55%——产品区底边过中线，关于开始接场）相距 30% 视口（约 2.7 格滚轮），抖动不会反复翻转
+      { rootMargin: "-55% 0px -15% 0px" },
     );
     if (productsRef.current) darkIo.observe(productsRef.current);
 
@@ -251,50 +252,55 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 产品：深色区（滚动至此全页反转） */}
-        <section ref={productsRef} id="products" className="mx-auto max-w-6xl px-6 py-28 text-white md:px-10 md:py-40">
-          <div data-reveal className="flex items-baseline justify-between">
-            <p className="font-mono text-[11px] tracking-[0.3em] text-white/50">产品 / PRODUCTS</p>
-            <p className="font-mono text-[11px] tracking-[0.2em] text-white/50">02 + 1 孵化中</p>
-          </div>
+        {/* 产品：间距保留原版美观；检测目标 = 内容盒（不含 section 上下 padding）。
+            getBoundingClientRect 量的是盒子（padding 算在内）——ref 挂在 section 上时，
+            判定线要等上下空白尾巴滚过去才触发，与肉眼看到的时机脱节。
+            挂在这层无 padding 的内容盒上，检测线贴合看得见的内容 */}
+        <section id="products" className="mx-auto max-w-6xl px-6 py-28 md:px-10 md:py-40">
+          <div ref={productsRef}>
+            <div data-reveal className="flex items-baseline justify-between">
+              <p className="font-mono text-[11px] tracking-[0.3em] text-muted">产品 / PRODUCTS</p>
+              <p className="font-mono text-[11px] tracking-[0.2em] text-muted">02 + 1 孵化中</p>
+            </div>
 
-          <div className="mt-12">
-            {PRODUCTS.map((p, i) => (
-              <div
-                key={p.index}
-                data-reveal
-                style={{ "--d": `${i * 0.08}s` } as React.CSSProperties}
-                className={`product-row py-12 md:py-16 ${p.ghost ? "opacity-40" : ""}`}
-              >
-                <div className="grid gap-6 md:grid-cols-[3.5rem_1fr_auto] md:gap-10">
-                  <p className="font-mono text-sm text-white/40">{p.index}</p>
-                  <div>
-                    <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">{p.name}</h3>
-                    <p className="mt-4 max-w-2xl text-sm leading-loose text-white/60 md:text-[15px]">
-                      {p.desc}
-                    </p>
-                    {p.specs.length > 0 && (
-                      <p className="mt-5 flex flex-wrap items-center text-xs text-white/45">
-                        {p.specs.map((s) => (
-                          <span key={s} className="spec-item">{s}</span>
-                        ))}
+            <div className="mt-12">
+              {PRODUCTS.map((p, i) => (
+                <div
+                  key={p.index}
+                  data-reveal
+                  style={{ "--d": `${i * 0.08}s` } as React.CSSProperties}
+                  className={`product-row py-12 md:py-16 ${p.ghost ? "opacity-40" : ""}`}
+                >
+                  <div className="grid gap-6 md:grid-cols-[3.5rem_1fr_auto] md:gap-10">
+                    <p className="font-mono text-sm text-muted">{p.index}</p>
+                    <div>
+                      <h3 className="text-3xl font-semibold tracking-tight md:text-4xl">{p.name}</h3>
+                      <p className="mt-4 max-w-2xl text-sm leading-loose text-muted md:text-[15px]">
+                        {p.desc}
                       </p>
-                    )}
-                  </div>
-                  <div className="flex flex-col items-start gap-3 md:items-end">
-                    <p className="font-mono text-xs text-white/50">{p.version}</p>
-                    {!p.ghost && (
-                      <a
-                        href={p.url}
-                        className="row-link font-mono text-xs tracking-[0.18em] text-white underline underline-offset-8"
-                      >
-                        访问 ↗
-                      </a>
-                    )}
+                      {p.specs.length > 0 && (
+                        <p className="mt-5 flex flex-wrap items-center text-xs text-muted">
+                          {p.specs.map((s) => (
+                            <span key={s} className="spec-item">{s}</span>
+                          ))}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-start gap-3 md:items-end">
+                      <p className="font-mono text-xs text-muted">{p.version}</p>
+                      {!p.ghost && (
+                        <a
+                          href={p.url}
+                          className="row-link font-mono text-xs tracking-[0.18em] text-ink underline underline-offset-8"
+                        >
+                          访问 ↗
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </section>
 
