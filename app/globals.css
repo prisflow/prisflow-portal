@@ -30,6 +30,15 @@ body {
   height: 100%;
 }
 
+/* 页级滚动条隐藏：滚轮/触控滚动不受影响 */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   background: var(--color-paper);
   color: var(--color-ink);
